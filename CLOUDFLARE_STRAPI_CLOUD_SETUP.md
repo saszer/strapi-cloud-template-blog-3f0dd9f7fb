@@ -474,3 +474,4 @@ NEXT_PUBLIC_SITE_URL=https://ai2fin.com
 
 **Built with embracingearth.space architecture**  
 *Secure • Scalable • High-Performance*
+
