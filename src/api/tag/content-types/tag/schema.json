@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "categories",
+  "collectionName": "tags",
   "info": {
-    "singularName": "category",
-    "pluralName": "categories",
-    "displayName": "Category",
-    "description": "Blog categories with color coding - embracingearth.space"
+    "singularName": "tag",
+    "pluralName": "tags",
+    "displayName": "Tag",
+    "description": "Content tags for filtering and SEO - embracingearth.space"
   },
   "options": {
     "draftAndPublish": false
@@ -22,10 +22,6 @@
       "targetField": "name",
       "required": true
     },
-    "description": {
-      "type": "text",
-      "maxLength": 500
-    },
     "color": {
       "type": "string",
       "maxLength": 7,
@@ -33,9 +29,9 @@
     },
     "articles": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::article.article",
-      "mappedBy": "category"
+      "mappedBy": "tags"
     }
   }
 }

@@ -5,7 +5,7 @@
     "singularName": "author",
     "pluralName": "authors",
     "displayName": "Author",
-    "description": "Create authors for your content"
+    "description": "Blog post authors with social profiles - embracingearth.space"
   },
   "options": {
     "draftAndPublish": false
@@ -13,16 +13,40 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "bio": {
+      "type": "text",
+      "maxLength": 1000
     },
     "avatar": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images", "files", "videos"]
+      "allowedTypes": ["images"]
     },
-    "email": {
-      "type": "string"
+    "twitter": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "linkedin": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "github": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "website": {
+      "type": "string",
+      "maxLength": 255
     },
     "articles": {
       "type": "relation",

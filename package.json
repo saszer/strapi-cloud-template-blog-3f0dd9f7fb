@@ -1,8 +1,21 @@
 {
-  "name": "my-app-name",
-  "version": "0.1.0",
+  "name": "ai2fin-strapi-blog",
+  "version": "1.0.0",
   "private": true,
-  "description": "A Strapi application",
+  "description": "AI2Fin Blog CMS - Enterprise-grade headless CMS optimized for SEO and LLM ranking. Built with embracingearth.space architecture for 100k+ concurrent users.",
+  "author": "AI2Fin Team",
+  "license": "MIT",
+  "keywords": [
+    "strapi",
+    "cms",
+    "headless-cms",
+    "blog",
+    "seo-optimized",
+    "nextjs",
+    "ai2fin",
+    "enterprise",
+    "scalable"
+  ],
   "scripts": {
     "build": "strapi build",
     "deploy": "strapi deploy",

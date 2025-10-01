@@ -5,7 +5,7 @@
     "singularName": "article",
     "pluralName": "articles",
     "displayName": "Article",
-    "description": "Create your blog content"
+    "description": "Blog articles with SEO optimization - embracingearth.space"
   },
   "options": {
     "draftAndPublish": true
@@ -13,27 +13,35 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text",
-      "maxLength": 80
+      "type": "string",
+      "required": true,
+      "maxLength": 255
     },
     "slug": {
       "type": "uid",
-      "targetField": "title"
+      "targetField": "title",
+      "required": true
     },
-    "cover": {
+    "excerpt": {
+      "type": "text",
+      "maxLength": 500
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "featuredImage": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images", "files", "videos"]
+      "allowedTypes": ["images"]
     },
     "author": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::author.author",
-      "inversedBy": "articles"
+      "inversedBy": "articles",
+      "required": true
     },
     "category": {
       "type": "relation",
@@ -41,9 +49,25 @@
       "target": "api::category.category",
       "inversedBy": "articles"
     },
-    "blocks": {
-      "type": "dynamiczone",
-      "components": ["shared.media", "shared.quote", "shared.rich-text", "shared.slider"]
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "inversedBy": "articles"
+    },
+    "metaTitle": {
+      "type": "string",
+      "maxLength": 60
+    },
+    "metaDescription": {
+      "type": "text",
+      "maxLength": 160
+    },
+    "keywords": {
+      "type": "text"
+    },
+    "canonicalUrl": {
+      "type": "string"
     }
   }
 }
