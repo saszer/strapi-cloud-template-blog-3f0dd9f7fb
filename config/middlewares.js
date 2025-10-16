@@ -14,8 +14,11 @@ module.exports = [
         useDefaults: true,
         directives: {
           'connect-src': ["'self'", 'https:'],
-          'img-src': ["'self'", 'data:', 'blob:', 'https:'],
-          'media-src': ["'self'", 'data:', 'blob:'],
+          // CRITICAL FIX: Allow all image sources including Strapi Cloud media
+          'img-src': ["'self'", 'data:', 'blob:', 'https:', 'http:'],
+          'media-src': ["'self'", 'data:', 'blob:', 'https:', 'http:'],
+          // Allow Strapi Cloud media domains specifically
+          'default-src': ["'self'", 'https:', 'http:'],
           upgradeInsecureRequests: null,
         },
       },
