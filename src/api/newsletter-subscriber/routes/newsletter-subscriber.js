@@ -46,5 +46,10 @@ const customRoutes = {
   ]
 };
 
-module.exports = [defaultRouter, customRoutes];
+module.exports = {
+  routes: [
+    ...defaultRouter.routes,
+    ...customRoutes.routes
+  ]
+};
 
