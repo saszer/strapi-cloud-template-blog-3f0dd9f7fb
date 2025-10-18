@@ -1,0 +1,76 @@
+{
+  "kind": "collectionType",
+  "collectionName": "newsletter_subscribers",
+  "info": {
+    "singularName": "newsletter-subscriber",
+    "pluralName": "newsletter-subscribers",
+    "displayName": "Newsletter Subscriber",
+    "description": "Email newsletter subscribers with source tracking - embracingearth.space"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": "GDPR compliant newsletter subscription system for 100k+ concurrent users"
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true,
+      "maxLength": 255
+    },
+    "name": {
+      "type": "string",
+      "required": false,
+      "maxLength": 255
+    },
+    "source": {
+      "type": "enumeration",
+      "enum": [
+        "pricing_auto_plus",
+        "docs_bank_connectors",
+        "docs_email_processing",
+        "docs_allocations",
+        "docs_insight_plus",
+        "docs_ai_assistant",
+        "newsletter_page",
+        "footer",
+        "other"
+      ],
+      "required": true,
+      "default": "other"
+    },
+    "subscribedFromPage": {
+      "type": "string",
+      "required": true,
+      "maxLength": 500
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "confirmed",
+        "unsubscribed"
+      ],
+      "required": true,
+      "default": "pending"
+    },
+    "confirmedAt": {
+      "type": "datetime"
+    },
+    "unsubscribedAt": {
+      "type": "datetime"
+    },
+    "ipAddress": {
+      "type": "string",
+      "maxLength": 45
+    },
+    "userAgent": {
+      "type": "text"
+    },
+    "notes": {
+      "type": "text"
+    }
+  }
+}
+
