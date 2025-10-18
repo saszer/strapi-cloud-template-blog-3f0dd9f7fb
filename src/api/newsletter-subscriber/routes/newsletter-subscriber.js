@@ -7,11 +7,7 @@
  * @see https://embracingearth.space
  */
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-const defaultRouter = createCoreRouter('api::newsletter-subscriber.newsletter-subscriber');
-
-const customRoutes = {
+module.exports = {
   routes: [
     {
       method: 'POST',
@@ -43,13 +39,6 @@ const customRoutes = {
         middlewares: []
       }
     }
-  ]
-};
-
-module.exports = {
-  routes: [
-    ...defaultRouter.routes,
-    ...customRoutes.routes
   ]
 };
 
