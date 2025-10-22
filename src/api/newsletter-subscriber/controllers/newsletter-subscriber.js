@@ -242,3 +242,10 @@ module.exports = createCoreController('api::newsletter-subscriber.newsletter-sub
   }
 }));
 
+
+
+
+
+
+
+

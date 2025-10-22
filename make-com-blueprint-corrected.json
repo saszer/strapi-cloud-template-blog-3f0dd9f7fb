@@ -1,0 +1,284 @@
+{
+  "name": "Strapi Blog Auto-Post to Social Media with UTM Tracking",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "parameters": {
+        "hook": "WEBHOOK_ID_PLACEHOLDER",
+        "maxResults": 1
+      },
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "restore": {},
+        "expect": [
+          {
+            "name": "entry",
+            "type": "object",
+            "label": "Entry"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "module": "util:SetVariable2",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "name": "hashtags",
+        "scope": "roundtrip",
+        "value": "#{{1.keywords}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Generate Hashtags"
+        },
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "util:SetVariable2",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "name": "baseUrl",
+        "scope": "roundtrip",
+        "value": "https://ai2fin.com/blog/{{1.slug}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Generate Base URL"
+        },
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "builtin:Router",
+      "version": 1,
+      "parameters": {},
+      "mapper": null,
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      },
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 5,
+              "module": "util:SetVariable2",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "name": "twitterUrl",
+                "scope": "roundtrip",
+                "value": "{{3.baseUrl}}?utm_source=twitter&utm_medium=social&utm_campaign=blog_auto_post&utm_content={{1.slug}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": -200,
+                  "name": "Generate Twitter UTM URL"
+                }
+              }
+            },
+            {
+              "id": 6,
+              "module": "twitter:ActionCreateTweet",
+              "version": 5,
+              "parameters": {
+                "__IMTCONN__": "TWITTER_CONNECTION_PLACEHOLDER"
+              },
+              "mapper": {
+                "text": "{{1.title}}\n\n{{1.description}}\n\nRead more: {{5.twitterUrl}}\n\n{{2.hashtags}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1500,
+                  "y": -200,
+                  "name": "Post to Twitter"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 7,
+              "module": "util:SetVariable2",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "name": "linkedinUrl",
+                "scope": "roundtrip",
+                "value": "{{3.baseUrl}}?utm_source=linkedin&utm_medium=social&utm_campaign=blog_auto_post&utm_content={{1.slug}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": -100,
+                  "name": "Generate LinkedIn UTM URL"
+                }
+              }
+            },
+            {
+              "id": 8,
+              "module": "linkedin:ActionCreateShare",
+              "version": 3,
+              "parameters": {
+                "__IMTCONN__": "LINKEDIN_CONNECTION_PLACEHOLDER"
+              },
+              "mapper": {
+                "text": "📢 {{1.title}}\n\n{{1.description}}\n\nRead the full article: {{7.linkedinUrl}}\n\n{{2.hashtags}}",
+                "visibility": "PUBLIC"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1500,
+                  "y": -100,
+                  "name": "Post to LinkedIn"
+                },
+                "notes": [
+                  {
+                    "text": "⚠️ IMPORTANT: Leave Title, Description, and Thumbnail fields EMPTY to enable LinkedIn preview card generation!"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 9,
+              "module": "util:SetVariable2",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "name": "facebookUrl",
+                "scope": "roundtrip",
+                "value": "{{3.baseUrl}}?utm_source=facebook&utm_medium=social&utm_campaign=blog_auto_post&utm_content={{1.slug}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": 0,
+                  "name": "Generate Facebook UTM URL"
+                }
+              }
+            },
+            {
+              "id": 10,
+              "module": "facebook-pages:ActionCreatePagePost",
+              "version": 2,
+              "parameters": {
+                "__IMTCONN__": "FACEBOOK_CONNECTION_PLACEHOLDER"
+              },
+              "mapper": {
+                "page": "PAGE_ID_PLACEHOLDER",
+                "message": "🚀 {{1.title}}\n\n{{1.description}}\n\nRead more: {{9.facebookUrl}}\n\n{{2.hashtags}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1500,
+                  "y": 0,
+                  "name": "Post to Facebook"
+                },
+                "notes": [
+                  {
+                    "text": "⚠️ CRITICAL: Do NOT fill Link, Picture, Name, or Description fields! Causes Error 100. Facebook will auto-scrape the URL from the message."
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 11,
+              "module": "util:SetVariable2",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "name": "instagramUrl",
+                "scope": "roundtrip",
+                "value": "{{3.baseUrl}}?utm_source=instagram&utm_medium=social&utm_campaign=blog_auto_post&utm_content={{1.slug}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": 100,
+                  "name": "Generate Instagram UTM URL"
+                }
+              }
+            },
+            {
+              "id": 12,
+              "module": "instagram-business:ActionCreatePhotoPost",
+              "version": 1,
+              "parameters": {
+                "__IMTCONN__": "INSTAGRAM_CONNECTION_PLACEHOLDER"
+              },
+              "mapper": {
+                "account": "INSTAGRAM_ACCOUNT_ID_PLACEHOLDER",
+                "imageUrl": "{{1.featuredImage.url}}",
+                "caption": "{{1.title}}\n\n{{1.description}}\n\nLink in bio 👆\n\n{{2.hashtags}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1500,
+                  "y": 100,
+                  "name": "Post to Instagram"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": false,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us1.make.com"
+  }
+}

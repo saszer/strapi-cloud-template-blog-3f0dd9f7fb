@@ -27,6 +27,7 @@
     "source": {
       "type": "enumeration",
       "enum": [
+        "blog",
         "pricing_auto_plus",
         "docs_bank_connectors",
         "docs_email_processing",
@@ -73,4 +74,11 @@
     }
   }
 }
+
+
+
+
+
+
+
 

@@ -1,0 +1,554 @@
+{
+    "name": "Strapi Blog Auto-Post to Social Media with UTM Tracking",
+    "flow": [
+        {
+            "id": 1,
+            "module": "gateway:CustomWebHook",
+            "version": 1,
+            "parameters": {
+                "hook": "WEBHOOK_ID_PLACEHOLDER",
+                "maxResults": 1
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "restore": {},
+                "expect": [
+                    {
+                        "name": "entry",
+                        "type": "object",
+                        "label": "Entry"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "util:SetVariable2",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "name": "rawKeywords",
+                "scope": "roundtrip",
+                "value": "{{1.entry.keywords}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0,
+                    "name": "Get Raw Keywords"
+                },
+                "restore": {
+                    "expect": {
+                        "scope": {
+                            "label": "One cycle"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Variable name",
+                        "required": true
+                    },
+                    {
+                        "name": "scope",
+                        "type": "select",
+                        "label": "Variable lifetime",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "roundtrip",
+                                "execution"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "type": "any",
+                        "label": "Variable value"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "rawKeywords",
+                        "label": "rawKeywords",
+                        "type": "any"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2a,
+            "module": "util:SetVariable2",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "name": "hashtags",
+                "scope": "roundtrip",
+                "value": "{{2.rawKeywords}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 0,
+                    "name": "Process Hashtags"
+                },
+                "restore": {
+                    "expect": {
+                        "scope": {
+                            "label": "One cycle"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Variable name",
+                        "required": true
+                    },
+                    {
+                        "name": "scope",
+                        "type": "select",
+                        "label": "Variable lifetime",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "roundtrip",
+                                "execution"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "type": "any",
+                        "label": "Variable value"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "hashtags",
+                        "label": "hashtags",
+                        "type": "any"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "util:SetVariable2",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "name": "baseUrl",
+                "scope": "roundtrip",
+                "value": "https://ai2fin.com/blog/{{1.entry.slug}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 0,
+                    "name": "Generate Base URL"
+                },
+                "restore": {
+                    "expect": {
+                        "scope": {
+                            "label": "One cycle"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Variable name",
+                        "required": true
+                    },
+                    {
+                        "name": "scope",
+                        "type": "select",
+                        "label": "Variable lifetime",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "roundtrip",
+                                "execution"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "type": "any",
+                        "label": "Variable value"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "baseUrl",
+                        "label": "baseUrl",
+                        "type": "any"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 900,
+                    "y": 0
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 5,
+                            "module": "util:SetVariable2",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "name": "twitterUrl",
+                                "scope": "roundtrip",
+                                "value": "{{3.baseUrl}}?utm_source=twitter&utm_medium=social&utm_campaign=blog_auto_post&utm_content={{1.entry.slug}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1153,
+                                    "y": -324,
+                                    "name": "Generate Twitter UTM URL"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "scope": {
+                                            "label": "One cycle"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Variable name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "scope",
+                                        "type": "select",
+                                        "label": "Variable lifetime",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "roundtrip",
+                                                "execution"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Variable value"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "twitterUrl",
+                                        "label": "twitterUrl",
+                                        "type": "any"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 21,
+                            "module": "xtweetapi-com:Tweet",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": "TWITTER_CONNECTION_PLACEHOLDER"
+                            },
+                            "mapper": {
+                                "text": "{{1.entry.title}}\n\n{{1.entry.description}}\n\n{{1.entry.excerpt}}\n\nRead more: {{5.twitterUrl}}\n\n{{2a.hashtags}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1526,
+                                    "y": -324,
+                                    "name": "Post to Twitter"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 7,
+                            "module": "util:SetVariable2",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "name": "linkedinUrl",
+                                "scope": "roundtrip",
+                                "value": "{{3.baseUrl}}?utm_source=linkedin&utm_medium=social&utm_campaign=blog_auto_post&utm_content={{1.entry.slug}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1179,
+                                    "y": -152,
+                                    "name": "Generate LinkedIn UTM URL"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "scope": {
+                                            "label": "One cycle"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                        {
+                                            "name": "name",
+                                            "type": "text",
+                                            "label": "Variable name",
+                                            "required": true
+                                        },
+                                        {
+                                            "name": "scope",
+                                            "type": "select",
+                                            "label": "Variable lifetime",
+                                            "required": true,
+                                            "validate": {
+                                                "enum": [
+                                                    "roundtrip",
+                                                    "execution"
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "name": "value",
+                                            "type": "any",
+                                            "label": "Variable value"
+                                        }
+                                    ],
+                                    "interface": [
+                                        {
+                                            "name": "linkedinUrl",
+                                            "label": "linkedinUrl",
+                                            "type": "any"
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "id": 23,
+                            "module": "linkedin:CreateTextShare",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": "LINKEDIN_CONNECTION_PLACEHOLDER"
+                            },
+                            "mapper": {
+                                "text": "{{1.entry.title}}\n\n{{1.entry.description}}\n\n{{1.entry.excerpt}}\n\nRead the full article: {{7.linkedinUrl}}\n\n{{2a.hashtags}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1479,
+                                    "y": -152,
+                                    "name": "Post to LinkedIn"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 9,
+                            "module": "util:SetVariable2",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "name": "facebookUrl",
+                                "scope": "roundtrip",
+                                "value": "{{3.baseUrl}}?utm_source=facebook&utm_medium=social&utm_campaign=blog_auto_post&utm_content={{1.entry.slug}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 0,
+                                    "name": "Generate Facebook UTM URL"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "scope": {
+                                            "label": "One cycle"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Variable name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "scope",
+                                        "type": "select",
+                                        "label": "Variable lifetime",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "roundtrip",
+                                                "execution"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Variable value"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "facebookUrl",
+                                        "label": "facebookUrl",
+                                        "type": "any"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 24,
+                            "module": "facebook-pages:CreatePost",
+                            "version": 6,
+                            "parameters": {
+                                "__IMTCONN__": "FACEBOOK_CONNECTION_PLACEHOLDER"
+                            },
+                            "mapper": {
+                                "page": "PAGE_ID_PLACEHOLDER",
+                                "message": "{{1.entry.title}}\n\n{{1.entry.description}}\n\n{{1.entry.excerpt}}\n\nRead more: {{9.facebookUrl}}\n\n{{2a.hashtags}}",
+                                "link": "{{9.facebookUrl}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 0,
+                                    "name": "Post to Facebook"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 11,
+                            "module": "util:SetVariable2",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "name": "instagramUrl",
+                                "scope": "roundtrip",
+                                "value": "{{3.baseUrl}}?utm_source=instagram&utm_medium=social&utm_campaign=blog_auto_post&utm_content={{1.entry.slug}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1174,
+                                    "y": 275,
+                                    "name": "Generate Instagram UTM URL"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "scope": {
+                                            "label": "One cycle"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Variable name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "scope",
+                                        "type": "select",
+                                        "label": "Variable lifetime",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "roundtrip",
+                                                "execution"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Variable value"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "instagramUrl",
+                                        "label": "instagramUrl",
+                                        "type": "any"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 25,
+                            "module": "instagram-business:CreatePostPhoto",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": "INSTAGRAM_CONNECTION_PLACEHOLDER"
+                            },
+                            "mapper": {
+                                "account": "INSTAGRAM_ACCOUNT_ID_PLACEHOLDER",
+                                "imageUrl": "{{1.entry.cover.url}}",
+                                "caption": "{{1.entry.title}}\n\n{{1.entry.description}}\n\n{{1.entry.excerpt}}\n\nLink in bio 👆\n\n{{2a.hashtags}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 100,
+                                    "name": "Post to Instagram"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": false,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu2.make.com",
+        "notes": []
+    }
+}

@@ -61,3 +61,10 @@ module.exports = createCoreService('api::newsletter-subscriber.newsletter-subscr
   }
 }));
 
+
+
+
+
+
+
+
