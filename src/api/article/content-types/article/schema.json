@@ -68,6 +68,24 @@
     },
     "canonicalUrl": {
       "type": "string"
+    },
+    "relatedArticles": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::article.article",
+      "description": "Internal links for SEO authority - select 2-3 related articles (embracingearth.space)"
+    },
+    "externalSources": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.external-link",
+      "max": 3,
+      "description": "External trust links for credibility (embracingearth.space)"
+    },
+    "showExternalSources": {
+      "type": "boolean",
+      "default": false,
+      "description": "Toggle ON to display Sources section at bottom of article (embracingearth.space)"
     }
   }
 }

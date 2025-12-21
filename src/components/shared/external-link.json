@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_external_links",
+  "info": {
+    "name": "ExternalLink",
+    "icon": "link",
+    "displayName": "External Link",
+    "description": "External trust link for SEO credibility - embracingearth.space"
+  },
+  "options": {},
+  "attributes": {
+    "url": {
+      "type": "string",
+      "required": true,
+      "regex": "^https?://"
+    },
+    "anchorText": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "source": {
+      "type": "string",
+      "maxLength": 50,
+      "description": "Source name e.g. 'Harvard Business Review'"
+    }
+  }
+}
+

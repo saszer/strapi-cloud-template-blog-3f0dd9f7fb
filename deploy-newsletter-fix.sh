@@ -38,3 +38,5 @@ echo "✅ Newsletter schema fix deployed!"
 echo "   - Added 'blog' source to newsletter-subscriber enum"
 echo "   - Newsletter signup from /blog should now work"
 echo "   - Check logs for any remaining issues"
+
+
