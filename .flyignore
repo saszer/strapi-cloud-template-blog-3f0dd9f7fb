@@ -1,0 +1,64 @@
+# Fly.io ignore file - excludes files from deployment
+# Similar to .dockerignore but for Fly.io git deployments
+
+# Large image files
+*.png
+*.jpg
+*.jpeg
+!favicon.png
+!public/**/*.png
+!public/**/*.jpg
+!public/**/*.jpeg
+
+# Screenshots
+Screenshot*.png
+Screenshot*.jpg
+
+# Documentation (not needed in production)
+*.md
+!README.md
+
+# Data files (use external DB)
+data/uploads/*
+!data/uploads/.gitkeep
+*.sqlite
+*.sqlite3
+*.db
+
+# Build outputs (built in container)
+build
+dist
+.tmp
+.strapi
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Deployment scripts
+deploy-*.sh
+deploy-*.bat
+*.sh
+
+# Blueprint files
+make-com-*.json
+
+# Logs
+*.log
+logs
+
+# Environment files
+.env
+.env.local
+.env.*.local
