@@ -1,64 +1,68 @@
-# Fly.io ignore file - excludes files from deployment
-# Similar to .dockerignore but for Fly.io git deployments
+# Fly.io ignore file - SAFE exclusions only
+# Only excludes files that are NOT needed at runtime
+# All required files (src/, config/, public/, etc.) are INCLUDED
 
-# Large image files
-*.png
-*.jpg
-*.jpeg
-!favicon.png
-!public/**/*.png
-!public/**/*.jpg
-!public/**/*.jpeg
-
-# Screenshots
+# Screenshots (not needed - these are documentation)
 Screenshot*.png
 Screenshot*.jpg
 
-# Documentation (not needed in production)
+# Documentation files (not needed at runtime - Strapi doesn't read .md files)
 *.md
 !README.md
 
-# Data files (use external DB)
+# Data directory uploads (these are seed data, not runtime files)
+# NOTE: public/uploads/ is KEPT (needed for media library)
 data/uploads/*
 !data/uploads/.gitkeep
+
+# Database files (use external DB in production)
 *.sqlite
 *.sqlite3
 *.db
 
-# Build outputs (built in container)
+# Build outputs (created during Docker build, not needed from git)
 build
 dist
 .tmp
 .strapi
 
-# Git
+# Git metadata (not needed in container)
 .git
 .gitignore
 .gitattributes
 
-# IDE
+# IDE files (not needed)
 .idea
 .vscode
 *.swp
 *.swo
 
-# OS
+# OS files (not needed)
 .DS_Store
 Thumbs.db
 
-# Deployment scripts
+# Deployment scripts (not needed in container)
 deploy-*.sh
 deploy-*.bat
 *.sh
 
-# Blueprint files
+# Blueprint files (not needed at runtime)
 make-com-*.json
 
-# Logs
+# Logs (not needed from git)
 *.log
 logs
 
-# Environment files
+# Environment files (set via Fly.io secrets, not from git)
 .env
 .env.local
 .env.*.local
+
+# IMPORTANT: These are KEPT (needed for Strapi):
+# - src/ (source code)
+# - config/ (configuration)
+# - database/ (migrations)
+# - public/ (static files including uploads)
+# - package.json (dependencies)
+# - All images in public/uploads/ (media library)
+# - favicon.png (if in root)
