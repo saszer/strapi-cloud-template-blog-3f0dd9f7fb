@@ -1,65 +1,23 @@
-# Fly.io Configuration for Strapi CMS
-# Cost-optimized for minimal resource usage while maintaining availability
-# embracingearth.space - Enterprise-grade deployment architecture
+# fly.toml app configuration file generated for strapi-cloud-template-blog-3f0dd9f7fb on 2026-01-03T03:07:32Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "ai2fin-strapi-blog"
-primary_region = "iad"  # Change to your preferred region (iad=Washington DC, ord=Chicago, etc.)
+app = 'strapi-cloud-template-blog-3f0dd9f7fb'
+primary_region = 'syd'
 
 [build]
-  dockerfile = "Dockerfile"
 
-[env]
-  NODE_ENV = "production"
-  HOST = "0.0.0.0"
-  PORT = "1337"
-
-# Minimal resource allocation for cost efficiency
-# shared-cpu-1x = cheapest option, 256MB RAM
-# Auto-restart ensures availability despite minimal resources
-[compute]
-  cpu_kind = "shared"
-  cpus = 1
-  memory_mb = 256
-
-# Health check for auto-restart and availability
 [http_service]
   internal_port = 1337
   force_https = true
-  auto_stop_machines = false  # Keep running for always-available
+  auto_stop_machines = 'stop'
   auto_start_machines = true
-  min_machines_running = 1    # Always keep 1 instance running
-  processes = ["app"]
+  min_machines_running = 0
+  processes = ['app']
 
-  [[http_service.checks]]
-    grace_period = "10s"
-    interval = "30s"
-    method = "GET"
-    timeout = "5s"
-    path = "/_health"
-
-# Volume for persistent data (if using SQLite - NOT recommended for production)
-# For production, use Fly Postgres instead (see deployment guide)
-# [mounts]
-#   source = "strapi_data"
-#   destination = "/app/.tmp"
-
-# Process configuration
-[[processes]]
-  name = "app"
-  cmd = ["npm", "start"]
-
-# Restart policy for high availability
-[restart]
-  policy = "always"  # Always restart on failure
-  max_retries = 10
-  max_backoff = "5m"
-
-# Resource limits to prevent resource exhaustion
-[limits]
-  memory_mb = 256
-  memory_swap_mb = 512  # Allow swap for memory spikes
-
-# Metrics and observability
-[metrics]
-  port = 9091
-  path = "/metrics"
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 1024
