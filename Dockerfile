@@ -42,8 +42,8 @@ RUN addgroup -g 1001 -S nodejs && \
 COPY --from=dependencies --chown=strapi:nodejs /app/node_modules ./node_modules
 
 # Copy built application
+# Strapi creates 'build' directory (admin panel), not 'dist'
 COPY --from=build --chown=strapi:nodejs /app/build ./build
-COPY --from=build --chown=strapi:nodejs /app/dist ./dist
 COPY --from=build --chown=strapi:nodejs /app/public ./public
 COPY --from=build --chown=strapi:nodejs /app/config ./config
 COPY --from=build --chown=strapi:nodejs /app/database ./database
