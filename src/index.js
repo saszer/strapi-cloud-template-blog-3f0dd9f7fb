@@ -3,12 +3,14 @@ const bootstrap = require("./bootstrap");
 
 module.exports = {
   /**
-   * An asynchronous register function that runs before
-   * your application is initialized.
-   *
-   * This gives you an opportunity to extend code.
+   * Register custom routes and middleware
+   * embracingearth.space - Enterprise-grade health check for Fly.io monitoring
    */
-  register(/*{ strapi }*/) {},
+  register({ strapi }) {
+    // Health check is handled by custom middleware
+    // See src/middlewares/health-check.js
+    // embracingearth.space - Enterprise-grade health monitoring
+  },
 
   /**
    * An asynchronous bootstrap function that runs before

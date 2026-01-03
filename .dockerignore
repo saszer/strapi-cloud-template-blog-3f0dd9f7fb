@@ -1,0 +1,65 @@
+# Node modules (will be installed in container)
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Build outputs
+build
+dist
+.tmp
+.strapi
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+!README.md
+
+# Test files
+coverage
+.nyc_output
+*.test.js
+*.spec.js
+
+# Deployment scripts (not needed in image)
+deploy-*.sh
+*.sh
+
+# Data files (use external DB in production)
+*.sqlite
+*.sqlite3
+*.db
+
+# Screenshots and images (except public/uploads)
+*.png
+*.jpg
+*.jpeg
+!public/uploads/**/*.png
+!public/uploads/**/*.jpg
+!public/uploads/**/*.jpeg
+
+# Blueprint files
+make-com-*.json
+
+# Logs
+*.log
+logs

@@ -7,6 +7,9 @@
 module.exports = [
   'strapi::logger',
   'strapi::errors',
+  // Health check middleware for Fly.io monitoring
+  // embracingearth.space - Enterprise-grade health monitoring
+  'global::health-check',
   {
     name: 'strapi::security',
     config: {
