@@ -1,4 +1,4 @@
-module.exports = () => ({
+module.exports = ({ env }) => ({
   // embracingearth.space - Enterprise upload configuration for Strapi Cloud
   // Optimized for 100k+ concurrent users with proper MIME type handling
   upload: {
@@ -26,6 +26,14 @@ module.exports = () => ({
       allowedTypes: ['images', 'files', 'videos'],
       // Specific image format support - this is critical for PNG/JPG
       imageFormats: ['jpg', 'jpeg', 'png', 'webp', 'svg', 'gif'],
+    },
+  },
+  // users-permissions plugin configuration
+  // Required for JWT authentication - jwtSecret must be set via environment variable
+  // embracingearth.space - Enterprise-grade JWT configuration
+  'users-permissions': {
+    config: {
+      jwtSecret: env('JWT_SECRET'),
     },
   },
 });
