@@ -3,9 +3,30 @@
 const fs = require('fs-extra');
 const path = require('path');
 const mime = require('mime-types');
-const { categories, authors, articles, global, about } = require('../data/data.json');
+
+// Conditionally load seed data - only if file exists
+// embracingearth.space - Enterprise-grade error handling for missing seed data
+let seedData = null;
+try {
+  const dataPath = path.join(__dirname, '../data/data.json');
+  if (fs.existsSync(dataPath)) {
+    seedData = require(dataPath);
+  }
+} catch (error) {
+  console.warn('Seed data file not found or invalid. Skipping seed data import.');
+  console.warn('This is normal if seed data has already been imported or if running in production without seed data.');
+}
+
+const { categories = [], authors = [], articles = [], global: globalData = null, about: aboutData = null } = seedData || {};
 
 async function seedExampleApp() {
+  // If seed data is not available, skip seeding
+  // embracingearth.space - Enterprise-grade graceful degradation
+  if (!seedData) {
+    console.log('Seed data not available. Skipping seed data import.');
+    return;
+  }
+
   const shouldImportSeedData = await isFirstRun();
 
   if (shouldImportSeedData) {
@@ -185,17 +206,18 @@ async function importArticles() {
 }
 
 async function importGlobal() {
+  if (!globalData) return;
   const favicon = await checkFileExistsBeforeUpload(['favicon.png']);
   const shareImage = await checkFileExistsBeforeUpload(['default-image.png']);
   return createEntry({
     model: 'global',
     entry: {
-      ...global,
+      ...globalData,
       favicon,
       // Make sure it's not a draft
       publishedAt: Date.now(),
       defaultSeo: {
-        ...global.defaultSeo,
+        ...globalData.defaultSeo,
         shareImage,
       },
     },
@@ -203,12 +225,13 @@ async function importGlobal() {
 }
 
 async function importAbout() {
-  const updatedBlocks = await updateBlocks(about.blocks);
+  if (!aboutData) return;
+  const updatedBlocks = await updateBlocks(aboutData.blocks);
 
   await createEntry({
     model: 'about',
     entry: {
-      ...about,
+      ...aboutData,
       blocks: updatedBlocks,
       // Make sure it's not a draft
       publishedAt: Date.now(),

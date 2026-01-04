@@ -48,6 +48,7 @@ COPY --from=build --chown=strapi:nodejs /app/public ./public
 COPY --from=build --chown=strapi:nodejs /app/config ./config
 COPY --from=build --chown=strapi:nodejs /app/database ./database
 COPY --from=build --chown=strapi:nodejs /app/src ./src
+COPY --from=build --chown=strapi:nodejs /app/data ./data
 COPY --from=build --chown=strapi:nodejs /app/package*.json ./
 
 # Create directories for uploads and temp data
