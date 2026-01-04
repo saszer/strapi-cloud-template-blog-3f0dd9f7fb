@@ -10,10 +10,13 @@ Screenshot*.jpg
 *.md
 !README.md
 
-# Data directory uploads (these are seed data, not runtime files)
+# Data directory uploads (these are seed data images, not runtime files)
+# NOTE: data/data.json is KEPT (needed for bootstrap seeding)
 # NOTE: public/uploads/ is KEPT (needed for media library)
 data/uploads/*
 !data/uploads/.gitkeep
+# Explicitly include data.json (seed data structure)
+!data/data.json
 
 # Database files (use external DB in production)
 *.sqlite
