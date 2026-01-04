@@ -12,8 +12,10 @@ RUN apk add --no-cache python3 make g++
 # Copy package files
 COPY package*.json ./
 
-# Install production dependencies only
-RUN npm ci --only=production && npm cache clean --force
+# Install production dependencies
+# Using npm install instead of npm ci to handle lock file updates gracefully
+# embracingearth.space - Enterprise-grade dependency management
+RUN npm install --omit=dev && npm cache clean --force
 
 # Stage 2: Build
 FROM node:20-alpine AS build
@@ -22,7 +24,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 # Install all dependencies for build
-RUN npm ci && npm cache clean --force
+# Using npm install to handle lock file updates
+RUN npm install && npm cache clean --force
 
 # Copy source code
 COPY . .
