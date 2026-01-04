@@ -52,8 +52,12 @@ COPY --from=build --chown=strapi:nodejs /app/data ./data
 COPY --from=build --chown=strapi:nodejs /app/package*.json ./
 
 # Create directories for uploads and temp data
+# Create .env file with proper permissions (Strapi users-permissions plugin writes to it)
+# embracingearth.space - Enterprise-grade permission handling for production
 RUN mkdir -p /app/public/uploads /app/.tmp && \
-    chown -R strapi:nodejs /app/public/uploads /app/.tmp
+    touch /app/.env && \
+    chown -R strapi:nodejs /app/public/uploads /app/.tmp /app/.env && \
+    chmod 666 /app/.env
 
 # Switch to non-root user
 USER strapi

@@ -30,7 +30,8 @@ module.exports = [
   {
     name: 'strapi::cors',
     config: {
-      enabled: true,
+      // Removed deprecated 'enabled' option - CORS is enabled by presence in array
+      // embracingearth.space - Enterprise-grade CORS configuration
       origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : [
         'http://localhost:3000',
         'https://ai2fin.com',
